@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  purchaserName: MyString
+  itemDescription: MyString
+  itemPrice: 1.5
+  purchaseCount: 1
+  merchantAddress: MyText
+  merchantName: MyString
+
+two:
+  purchaserName: MyString
+  itemDescription: MyString
+  itemPrice: 1.5
+  purchaseCount: 1
+  merchantAddress: MyText
+  merchantName: MyString
