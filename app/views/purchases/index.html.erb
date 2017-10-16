@@ -1,4 +1,35 @@
 <h1>Welcome</h1>
 
 <h3>List of all Purchases</h3>
+
+
+<table class = "table table-bordered">
+  <thead>
+    <tr>
+      <th>Purchaser Name</th>
+      <th>Item Description</th>
+      <th>Item Price</th>
+      <th>Purchase Count</th>
+      <th>Merchant Address</th>
+      <th>Merchant Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @purchases.each do |p| %>
+      <tr>
+        <td><%= p.purchaser_name %></td>
+        <td><%= p.item_description %></td>
+        <td><%= p.item_price %></td>
+        <td><%= p.purchase_count %></td>
+        <td><%= p.merchant_address %></td>
+        <td><%= p.merchant_name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<b>Income: <%= @income %> </b>
+<br>
+
+
 <%= link_to "Add new purchase", new_purchase_path %>
