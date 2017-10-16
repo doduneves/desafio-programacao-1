@@ -12,6 +12,7 @@
       <th>Purchase Count</th>
       <th>Merchant Address</th>
       <th>Merchant Name</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
@@ -24,6 +25,7 @@
         <td><%= p.purchase_count %></td>
         <td><%= p.merchant_address %></td>
         <td><%= p.merchant_name %></td>
+        <td><%= link_to 'Delete', p, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

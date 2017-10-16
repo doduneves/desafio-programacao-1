@@ -9,43 +9,47 @@ class PurchasesController < ApplicationController
 	end
 
 	def create
-		#criar o tratamento do arquivo e colocar nos params do model
-		uploaded_file = params[:purchase][:file]
-
-		if uploaded_file.respond_to?(:read)
-			file_data = uploaded_file.read
+		if params[:purchase].nil?
+			flash[:warning] = 'You need to select a file to upload.'
+			redirect_to new_purchase_path
 		else
-			flash[:warning] = 'One or more itens could not be saved.'
-		end
+			uploaded_file = params[:purchase][:file]
 
-		doc_instance = read_doc(file_data)
-
-		all_itens_saved = false
-
-		doc_instance.each do |d|
-			instance_array = d.split("\t");
-
-			purchase = Purchase.new(purchase_params)
-			purchase.purchaser_name = instance_array[0].force_encoding('UTF-8')
-			purchase.item_description = instance_array[1].force_encoding('UTF-8')
-			purchase.item_price = instance_array[2].force_encoding('UTF-8')
-			purchase.purchase_count = instance_array[3].force_encoding('UTF-8')
-			purchase.merchant_address = instance_array[4].force_encoding('UTF-8')
-			purchase.merchant_name = instance_array[5].force_encoding('UTF-8')
-
-			if purchase.save
-				all_itens_saved = true
+			if uploaded_file.respond_to?(:read)
+				file_data = uploaded_file.read
 			else
-				all_itens_saved = false
+				flash[:warning] = 'One or more itens could not be saved.'
 			end
-		end
 
-		if all_itens_saved
-			flash[:success] = 'All itens on file successfully imported.'
-		else
-			flash[:warning] = 'One or more itens could not be saved.'
+			doc_instance = read_doc(file_data)
+
+			all_itens_saved = false
+
+			doc_instance.each do |d|
+				instance_array = d.split("\t");
+
+				purchase = Purchase.new(purchase_params)
+				purchase.purchaser_name = instance_array[0].force_encoding('UTF-8')
+				purchase.item_description = instance_array[1].force_encoding('UTF-8')
+				purchase.item_price = instance_array[2].force_encoding('UTF-8')
+				purchase.purchase_count = instance_array[3].force_encoding('UTF-8')
+				purchase.merchant_address = instance_array[4].force_encoding('UTF-8')
+				purchase.merchant_name = instance_array[5].force_encoding('UTF-8')
+
+				if purchase.save
+					all_itens_saved = true
+				else
+					all_itens_saved = false
+				end
+			end
+
+			if all_itens_saved
+				flash[:success] = 'All itens on file successfully imported.'
+			else
+				flash[:warning] = 'One or more itens could not be saved.'
+			end
+			redirect_to purchases_path
 		end
-		redirect_to purchases_path
 
 	end
 
@@ -62,6 +66,13 @@ class PurchasesController < ApplicationController
 		end
 
 		return income
+	end
+
+	def destroy
+		purchase = Purchase.find(params[:id])
+		purchase.destroy
+		flash[:success] = 'Successfully removed.'
+		redirect_to purchases_path
 	end
 
 	private

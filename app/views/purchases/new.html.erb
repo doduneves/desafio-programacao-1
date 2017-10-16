@@ -1,9 +1,13 @@
+<h2>Insert new Purchase Instance</h2>
 
 <%= form_for @purchase, :html => {:multipart => true} do |f| %>
 
-  <%= f.label :file %><br>
-  <%= f.file_field :file %>
+	<div class="form-group">
+		<%= f.label(:file, "Import File") %><br>
+		<%= f.file_field :file, :class => 'form-control-file' %>
+	</div>
 
-  <br><br>
-  <%= f.submit "Submit"%>
+	<%= f.submit "Submit"%>
 <% end %>
+
+<%= link_to "Back", purchases_path %>
